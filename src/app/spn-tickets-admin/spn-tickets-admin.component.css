@@ -1,0 +1,27 @@
+.ticker-result-container {
+    width: 100%;
+    padding: 15px;
+}
+
+.close-state {
+    color: rgba(66, 123, 43, 0.686);
+}
+
+.escalade-state {
+    color: rgba(255, 0, 0, 0.618);
+}
+
+.ticket-actions-bar {
+    width: 100%;
+    padding: 15px;
+}
+
+.ticket-row {
+    display: flex;
+    margin: 10px;
+    width: 100%;
+}
+
+.ticket-row:first-child {
+    width: 40%;
+}

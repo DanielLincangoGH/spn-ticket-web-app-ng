@@ -1,0 +1,101 @@
+<div class="ticket-actions-bar">
+    <p-dropdown [options]="ticketState" (onChange)="onSelectState($event)"></p-dropdown>
+    <button style="float: right;" pButton type="button" label="+ New ticket" (click)="onClickNewTicket()"
+        class="ui-button-raised ui-button-secondary"></button>
+</div>
+
+<div class="ticker-result-container">
+    <p-table [value]="tickets">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Reference code</th>
+                <th>Ticket</th>
+                <th>Status</th>
+                <th>Priority</th>
+                <th>Case owner</th>
+                <th>Due Date</th>
+                <th>Deals</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-ticket>
+            <tr>
+                <td>{{ticket.referenceCode}}</td>
+                <td>{{ticket.description}}</td>
+                <td
+                    [ngClass]="{'close-state': ticket.ticketState === 'CLO', 'escalade-state':ticket.ticketState === 'ESC'}">
+                    {{ticket.ticketStateDTO?.name}}</td>
+                <td>{{ticket.ticketPriorityDTO?.name}}</td>
+                <td>
+                    <i class="pi pi-user"></i>
+                    {{ticket.userDTO?.userName}}
+                </td>
+                <td>{{ticket.dueDate | date: 'yyyy-MM-dd HH:mm'}}</td>
+                <td><a> {{ticket.ticketDealDTO?.name}}</a> </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+
+
+<p-sidebar [(visible)]="showRegisterNav" position="right" [baseZIndex]="10000" [style]="{width:'35em'}">
+    <h1 style="font-weight:normal">New Ticket</h1>
+    <div class="ui-g">
+        <div class="ui-g-4">
+            <label style="float: right;"> Reference code: </label>
+        </div>
+        <div class="ui-g-8">
+            <input type="text" pInputText [(ngModel)]="newTicket.referenceCode" />
+        </div>
+    </div>
+    <div class="ui-g">
+        <div class="ui-g-4">
+            <label style="float: right;"> Description: </label>
+        </div>
+        <div class="ui-g-8">
+            <textarea [rows]="5" [cols]="30" pInputTextarea [(ngModel)]="newTicket.description"></textarea>
+        </div>
+    </div>
+    
+    <div class="ui-g">
+        <div class="ui-g-4">
+            <label style="float: right;"> State: </label>
+        </div>
+        <div class="ui-g-8">            
+            <p-dropdown [options]="states" [(ngModel)]="newTicket.ticketState"></p-dropdown>
+        </div>
+    </div>
+    
+    <div class="ui-g">
+        <div class="ui-g-4">
+            <label style="float: right;"> Priority: </label>
+        </div>
+        <div class="ui-g-8">            
+            <p-dropdown [options]="priorities" [(ngModel)]="newTicket.ticketPriority"></p-dropdown>
+        </div>
+    </div>
+
+    
+    <div class="ui-g">
+        <div class="ui-g-4">
+            <label style="float: right;"> Deal: </label>
+        </div>
+        <div class="ui-g-8">            
+            <p-dropdown [options]="deals" [(ngModel)]="newTicket.ticketDealType"></p-dropdown>
+        </div>
+    </div>
+
+    <div class="ui-g">
+        <div class="ui-g-4">
+            <label style="float: right;"> Due Date: </label>
+        </div>
+        <div class="ui-g-8">     
+            <p-calendar [(ngModel)]="newTicket.dueDate"></p-calendar>               
+        </div>
+    </div>
+
+    <div style="margin-top: 15px; text-align: center;">
+        <button pButton type="button" (click)="onClickSaveTicket()" label="Save" class="ui-button-success"></button>
+        <button pButton type="button" (click)="showRegisterNav = false" label="Cancel" class="ui-button-secondary"></button>
+    </div>
+
+</p-sidebar>
